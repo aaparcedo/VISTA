@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VISTA: Video Interaction Spatio-Temporal Analysis Benchmark</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="VISTA is a diagnostic benchmark for fine-grained, interaction-centric evaluation of spatio-temporal reasoning in Vision-Language Models.">
+  <meta name="keywords" content="VISTA, video understanding, spatio-temporal reasoning, VLM benchmark, video grounding, interaction analysis, CVPR 2026">
+
+  <!-- Google Scholar Meta -->
+  <meta name="citation_title" content="VISTA: Video Interaction Spatio-Temporal Analysis Benchmark">
+  <meta name="citation_author" content="Aparcedo, Alejandro">
+  <meta name="citation_author" content="Kumar, Akash">
+  <meta name="citation_author" content="Garg, Aaryan">
+  <meta name="citation_author" content="Pham, Dalton">
+  <meta name="citation_author" content="Chen, Wen-Kai">
+  <meta name="citation_author" content="Bharadwaj, Anirudh N">
+  <meta name="citation_author" content="Chadha, Aman">
+  <meta name="citation_author" content="Rawat, Yogesh S">
+  <meta name="citation_publication_date" content="2026">
+
+  <!-- Social Preview -->
+  <meta property="og:title" content="VISTA: Video Interaction Spatio-Temporal Analysis Benchmark">
+  <meta property="og:description" content="A diagnostic benchmark for fine-grained, interaction-centric evaluation of spatio-temporal reasoning in Vision-Language Models.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="VISTA: Video Interaction Spatio-Temporal Analysis Benchmark">
+  <meta name="twitter:description" content="A diagnostic benchmark for fine-grained, interaction-centric evaluation of spatio-temporal reasoning in Vision-Language Models.">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"></noscript>
+
+  <style>
+    :root {
+      --text-color: #1a1a2e;
+      --secondary-text: #555;
+      --accent-color: #4a6cf7;
+      --link-color: #4a6cf7;
+      --bg-color: #ffffff;
+      --section-bg: #f8f9fa;
+      --border-color: #e9ecef;
+      --max-width: 840px;
+      --wide-width: 1000px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text-color);
+      background: var(--bg-color);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--link-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== SCROLL TO TOP ===== */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      z-index: 999;
+      transition: opacity 0.3s;
+    }
+    .scroll-to-top.visible { display: flex; }
+
+    /* ===== HERO SECTION ===== */
+    .hero-section {
+      text-align: center;
+      padding: 60px 24px 20px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .publication-badge {
+      display: inline-block;
+      background: var(--accent-color);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-section h1 {
+      font-size: clamp(28px, 4.5vw, 42px);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    /* Authors */
+    .authors {
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 2;
+    }
+    .authors .author-name {
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .authors .author-name a { color: var(--text-color); }
+    .authors .author-name a:hover { color: var(--accent-color); text-decoration: none; }
+
+    .institution {
+      font-size: 15px;
+      color: var(--secondary-text);
+      margin-bottom: 4px;
+    }
+
+    .conference {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 24px;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: #333;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .action-btn:hover {
+      background: #555;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+    .action-btn i, .action-btn .ai { font-size: 16px; }
+
+    /* ===== TEASER / BANNER ===== */
+    .teaser-section {
+      max-width: var(--wide-width);
+      margin: 0 auto;
+      padding: 0 24px 16px;
+    }
+    .teaser-section img,
+    .teaser-section video {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .teaser-caption {
+      max-width: var(--max-width);
+      margin: 16px auto 0;
+      padding: 0 24px;
+      font-size: 15px;
+      color: var(--secondary-text);
+      text-align: center;
+      line-height: 1.6;
+    }
+    .teaser-caption strong { color: var(--text-color); }
+
+    /* ===== CONTENT SECTIONS ===== */
+    .content-section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+    .content-section.wide {
+      max-width: var(--wide-width);
+    }
+
+    .content-section h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .content-section h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 28px;
+      margin-bottom: 12px;
+    }
+
+    .content-section p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-color);
+    }
+    .content-section p + p { margin-top: 12px; }
+
+    /* Separator */
+    .separator {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      border: none;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* ===== FIGURE / IMAGE ===== */
+    .figure {
+      margin: 24px 0;
+      text-align: center;
+    }
+    .figure img {
+      max-width: 100%;
+      border-radius: 6px;
+    }
+    .figure-caption {
+      font-size: 14px;
+      color: var(--secondary-text);
+      margin-top: 10px;
+      line-height: 1.55;
+      text-align: center;
+    }
+    .figure-caption strong { color: var(--text-color); }
+
+    /* ===== TABLE ===== */
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 20px 0;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    thead th {
+      background: var(--section-bg);
+      padding: 10px 10px;
+      font-weight: 600;
+      font-size: 12px;
+      text-align: center;
+      border-bottom: 2px solid var(--border-color);
+    }
+    thead th:first-child { text-align: left; padding-left: 14px; }
+    tbody td {
+      padding: 8px 10px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+      font-variant-numeric: tabular-nums;
+    }
+    tbody td:first-child { text-align: left; font-weight: 500; padding-left: 14px; }
+    tbody tr:last-child td { border-bottom: none; }
+    .group-header td {
+      background: #f0f1f3;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--secondary-text);
+      padding: 6px 14px;
+      text-align: left;
+    }
+    td.best { font-weight: 700; color: var(--accent-color); }
+
+    /* ===== BIBTEX ===== */
+    .bibtex-container {
+      position: relative;
+      background: #1e1e2e;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+    .bibtex-container pre {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 13px;
+      color: #cdd6f4;
+      line-height: 1.55;
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.1);
+      color: #cdd6f4;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 32px 24px 48px;
+      font-size: 14px;
+      color: var(--secondary-text);
+      line-height: 1.7;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    footer a { color: var(--link-color); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .hero-section { padding: 40px 16px 16px; }
+      .hero-section h1 { font-size: 26px; }
+      .content-section { padding: 32px 16px; }
+      .action-buttons { gap: 8px; }
+      .action-btn { padding: 8px 14px; font-size: 13px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Scroll to Top -->
+  <button class="scroll-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero-section">
+    <span class="publication-badge">CVPR 2026 Workshop &mdash; PVUW</span>
+    <h1>VISTA: Video Interaction Spatio-Temporal Analysis Benchmark</h1>
+
+    <div class="authors">
+      <span class="author-name"><a href="https://openreview.net/profile?id=~Alejandro_Aparcedo1" target="_blank">Alejandro Aparcedo</a>,</span>
+      <span class="author-name"><a href="https://openreview.net/profile?id=~Akash_Kumar3" target="_blank">Akash Kumar</a>,</span>
+      <span class="author-name"><a href="https://openreview.net/profile?id=~Aaryan_Garg1" target="_blank">Aaryan Garg</a>,</span>
+      <span class="author-name"><a href="https://openreview.net/profile?id=~Dalton_Pham1" target="_blank">Dalton Pham</a>,</span>
+      <span class="author-name"><a href="https://openreview.net/profile?id=~Wen-Kai_Chen1" target="_blank">Wen-Kai Chen</a>,</span>
+      <span class="author-name"><a href="https://openreview.net/profile?id=~Anirudh_N_Bharadwaj1" target="_blank">Anirudh N Bharadwaj</a>,</span>
+      <span class="author-name"><a href="https://openreview.net/profile?id=~Aman_Chadha1" target="_blank">Aman Chadha</a>,</span>
+      <span class="author-name"><a href="https://openreview.net/profile?id=~Yogesh_S_Rawat1" target="_blank">Yogesh S Rawat</a></span>
+    </div>
+
+    <div class="action-buttons">
+      <a class="action-btn" href="#" target="_blank"><i class="fa-solid fa-file-pdf"></i> Paper</a>
+      <a class="action-btn" href="#" target="_blank"><i class="fa-brands fa-github"></i> Code</a>
+      <a class="action-btn" href="#" target="_blank"><i class="fa-solid fa-database"></i> Benchmark</a>
+      <a class="action-btn" href="https://openreview.net/forum?id=BKXANkNhWF" target="_blank"><i class="ai ai-openreview"></i> OpenReview</a>
+    </div>
+  </section>
+
+  <!-- ===== BIBTEX ===== -->
+  <section class="content-section">
+    <h2>BibTeX</h2>
+    <div class="bibtex-container">
+      <button class="copy-btn" onclick="copyBibtex()"><i class="fa-regular fa-copy"></i> Copy</button>
+      <pre id="bibtex-text">@inproceedings{aparcedo2026vista,
+  title     = {VISTA: Video Interaction Spatio-Temporal
+               Analysis Benchmark},
+  author    = {Aparcedo, Alejandro and Kumar, Akash and
+               Garg, Aaryan and Pham, Dalton and
+               Chen, Wen-Kai and Bharadwaj, Anirudh N and
+               Chadha, Aman and Rawat, Yogesh S},
+  booktitle = {CVPR 2026 Workshop on Pixel-level Video
+               Understanding in the Wild (PVUW)},
+  year      = {2026}
+}</pre>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+    You are free to borrow the source code of this website, we just ask that you link back to this page in the footer.<br>
+    This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+  </footer>
+
+  <script>
+    // Copy BibTeX
+    function copyBibtex() {
+      const text = document.getElementById('bibtex-text').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => { btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy'; }, 2000);
+      });
+    }
+
+    // Scroll to top button visibility
+    window.addEventListener('scroll', () => {
+      const btn = document.querySelector('.scroll-to-top');
+      if (window.scrollY > 300) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    });
+  </script>
+</body>
+</html>
