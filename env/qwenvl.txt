@@ -1,0 +1,6 @@
+# Qwen-VL-Chat remote code targets transformers 4.32
+transformers==4.32.0
+tiktoken
+transformers_stream_generator
+einops
+matplotlib
