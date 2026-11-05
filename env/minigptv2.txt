@@ -1,0 +1,33 @@
+# MiniGPT-v2 (Vision-CAIR/MiniGPT-4, eval_configs/minigptv2_eval.yaml). Python 3.10.
+# Install torch first:  uv pip install torch==2.0.0 torchvision==0.15.1 --index-url https://download.pytorch.org/whl/cu118
+# Also needs: a clone of https://github.com/Vision-CAIR/MiniGPT-4 (VISTA_MINIGPT4_REPO), Llama-2-7b-chat-hf
+# (gated, VISTA_LLAMA2_CHAT_PATH) and the MiniGPT-v2 stage-3 checkpoint (VISTA_MINIGPTV2_CKPT).
+# bitsandbytes 0.37 needs CUDA 11.x runtime libraries; on hosts with a newer system CUDA, install the nvidia-*-cu11
+# wheels below and put their lib/ directories (plus a libcudart.so symlink) on LD_LIBRARY_PATH.
+transformers==4.30.0
+timm==0.6.13
+webdataset==0.2.48
+omegaconf==2.3.0
+opencv-python-headless==4.7.0.72
+decord==0.6.0
+peft==0.2.0
+accelerate==0.20.3
+bitsandbytes==0.37.0
+nvidia-cuda-runtime-cu11==11.8.89
+nvidia-cublas-cu11==11.11.3.6
+nvidia-curand-cu11==10.3.0.86
+nvidia-cusparse-cu11==11.7.5.86
+iopath
+sentencepiece
+matplotlib
+scikit-image
+nltk
+scipy
+numpy<2
+pyyaml
+tqdm
+pillow
+pycocotools
+pandas==2.3.3
+wandb==0.31.0  # imported unconditionally by minigpt4.tasks
+visual-genome==1.1.1  # imported unconditionally by minigpt4.datasets

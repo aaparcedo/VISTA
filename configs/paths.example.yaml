@@ -1,0 +1,9 @@
+# Copy to configs/paths.yaml and point each entry at your local copy of the source dataset.
+# `video_relpath` in data/vista_annotations.jsonl is resolved relative to these roots.
+video_roots:
+  hcstvg1: /path/to/HC-STVG/v1/video          # contains e.g. 55_vfjywN5CN0Y.mp4
+  hcstvg2: /path/to/HC-STVG/v2/videos         # contains e.g. 6/50_TM5MPJIq1Is.mkv
+  vidstg:  /path/to/VidOR/video               # contains e.g. validation/1021/7771650716.mp4
+  vidvrd:  /path/to/VidVRD/videos             # contains e.g. ILSVRC2015_train_00103006.mp4
+  mevis:   /path/to/MeViS                     # contains valid_u/JPEGImages/<video_id>/*.jpg
+  rvos:    /path/to/Ref-YouTube-VOS           # contains valid/JPEGImages/<video_id>/*.jpg

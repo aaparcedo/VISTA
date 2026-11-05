@@ -1,0 +1,8 @@
+# InternVL2.5 remote code requires transformers 4.x (fails under 5.x with "Tensor.item() cannot be called on meta tensors")
+torch==2.8.0
+torchvision==0.23.0
+transformers==4.45.2
+tokenizers<0.21
+timm==0.6.13
+einops==0.6.1
+sentencepiece
