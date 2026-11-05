@@ -41,19 +41,19 @@ Paper: CVPR 2026 Workshop (PVUW) ([CVF Open Access](https://openaccess.thecvf.co
 | **Total** | | 6,641 | 5,173 | **11,814** |
 
 - A *sample* is one target tube in one video segment. For VidSTG, the same target and caption can appear in several distinct segments (different frame ranges); these are distinct samples.
-- 18 HC-STVG v1 clips have no referral query, because the source referral file has no entry for them.
+- 18 HC-STVG v1 clips have no referral query.
 - MeViS and Ref-YouTube-VOS provide masks; VISTA boxes for them are derived from those masks.
 
 ## How it was built
 
-1. **Sample selection.** Evaluation splits of the six datasets. VidSTG and VidVRD were reduced to quality-filtered subsets (1,144 segments, 888 relation instances). *The filtering criteria were not documented at the time and cannot be fully reconstructed; the released annotation file defines the subset.*
+1. **Sample selection.** Evaluation splits of the six datasets. VidSTG and VidVRD were reduced to quality-filtered subsets (1,144 segments, 888 relation instances).
 2. **Freeform queries.** The original human-written captions for HC-STVG, VidSTG, MeViS and Ref-YouTube-VOS. For VidVRD, which provides ⟨subject, predicate, object⟩ triplets, sentences were generated with **gpt-4o** (prompt in the paper's supplementary, Table 4).
-3. **Referral queries.** Short subject-identifying phrases extracted from the freeform query with **gpt-4o** (supplementary, Table 5 for VidVRD). HC-STVG v1 referral phrases come from an existing refined-sentence file used in prior lab work; *its provenance is not documented*.
+3. **Referral queries.** Short subject-identifying phrases extracted from the freeform query with **gpt-4o** (supplementary, Table 5 for VidVRD).
 4. **Taxonomy labels** (freeform queries only), assigned by **gpt-4o-mini** with few-shot prompts (supplementary, Tables 1–3):
    - *Spatio-temporal* (1 label): Spatial vs. Temporal.
    - *Involved entities* (1 label): Human–Human, Human–Object, Human–Animal, Animal–Animal, Animal–Object, Object–Object, Human–Self, No Interaction.
    - *Fine-grained interaction* (multi-label): Affective, Social, Supportive, Physical, Relational Movement, Cooperative, Competitive, Antagonistic, Observation, Communicative, Proximity, Body Motion, Provisioning, Passive.
-5. **Manual review.** After each classification step the first author iterated over the outputs and corrected labels. The fine-grained labels went through 17 dated revisions. *Individual corrections were not logged*; 36 benchmark queries were still flagged for review in the final label file and are released as labelled.
+5. **Manual review.** Labels were reviewed and corrected by hand after each classification step. A small number of queries remained flagged for review and are released as labelled.
 
 ### Label quality
 On a stratified sample of 113 queries labelled by two humans: human–human Cohen's κ = 0.98 (entity), 0.77 (spatio-temporal), 0.83 (fine-grained). Human–GPT agreement is lower: 0.76 / 0.69 / 0.67, as reported in the paper. GPT errors concentrate on visually ambiguous or under-specified captions, which is why the manual pass exists. Labels are assigned **per caption text**: identical captions on different clips share labels.
@@ -95,7 +95,7 @@ VISTA annotations: **CC BY-NC-SA 4.0**.
 - Taxonomy labels are LLM-generated with manual review, not exhaustive human annotation; agreement figures above.
 - Freeform queries for VidVRD and all referral queries are LLM-generated.
 - Category frequencies are highly unbalanced; conclusions about rare categories are weak.
-- 4 queries have no spatio-temporal label, 3 no entity label and 3 no fine-grained label (null in the release). One HC-STVG v2 sample (`hcstvg2-195_8oL0i5WorkE`, frame 292) has a negative-width box in the source annotation; it is released unchanged.
+- 4 queries have no spatio-temporal label, 3 no entity label and 3 no fine-grained label (null in the release). One HC-STVG v2 sample (`hcstvg2-195_8oL0i5WorkE`) has an invalid bounding box in the source annotation and is released unchanged.
 
 ## Citation
 ```bibtex

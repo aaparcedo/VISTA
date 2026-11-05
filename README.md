@@ -72,8 +72,8 @@ Writes `tables/table1.csv`, `tables/table_finegrained.csv` and `tables/coverage.
 
 - **Frames.** Videos are trimmed to the ground-truth segment and every 5th frame is sent to the model (Ref-YouTube-VOS frames are already sampled at that rate). The model predicts one box per frame.
 - **Metric.** `mvIoU` is the mean per-frame IoU over the sampled frames, averaged over samples and reported ×100.
-- **Missing GT frames (VidSTG, VidVRD).** A sampled frame without a GT box is scored against an empty box, i.e. IoU 0. This matches the protocol used for the paper.
-- **Undecodable frames.** A sampled frame the video decoder cannot read is skipped, as in the paper's runs.
+- **Missing GT frames (VidSTG, VidVRD).** A sampled frame without a GT box is scored against an empty box, i.e. IoU 0.
+- **Undecodable frames.** A sampled frame the video decoder cannot read is skipped.
 - **Model outputs.** All wrappers return boxes on a 0–1000 normalised grid, rescaled to pixels. An unparsable answer counts as an empty box.
 - **MiniGPT-v2 precision.** The wrapper follows the official evaluation config (Llama-2 loaded in 8-bit). Run it with `--batch_size 1`: in 8-bit, batching changes about a third of the answers.
 
